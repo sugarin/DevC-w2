@@ -1,0 +1,182 @@
+<html>
+<head>
+	<title> Simple JS Calculator by Che</title>
+<style type="text/css">
+	.button {
+        background-color: #000000;
+        color: #FFFFFF;
+        padding: 10px;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        margin:10px
+    }
+    
+    .small-btn {
+        width: 50px;
+        height: 25px;
+    }
+    
+    .medium-btn {
+        width: 70px;
+        height: 30px;
+    }
+    
+    .big-btn {
+        width: 90px;
+        height: 40px;
+    }
+</style>
+</head>
+
+<body>
+<h1>LATIHAN Hactiv8 - CALCULATOR JS</h1>
+<h3> Brigitta Chesya Pricilla </h3>
+<label> Masukkan angka </label> <div id="inputan" class="inputan">0</div>
+ <button class="angka small-btn" data-angka="1">1</button>
+  <button class="angka small-btn" data-angka="2">2</button>
+  <button class="angka small-btn" data-angka="3">3</button>
+  <br>
+  <button class="angka small-btn" data-angka="4">4</button>
+  <button class="angka small-btn" data-angka="5">5</button>
+  <button class="angka small-btn" data-angka="6">6</button>
+  <br>
+  <button class="angka small-btn" data-angka="7">7</button>
+  <button class="angka small-btn" data-angka="8">8</button>
+  <button class="angka small-btn" data-angka="9">9</button>
+  <br>
+  <button class="angka small-btn" data-angka=".">.</button>
+  <button class="angka small-btn" data-angka="0">0</button>
+  <button onclick="munculPop()" class="small-btn">C</button>
+  <br>
+  <br>
+  <button id="samadengan" class="samadengan big-btn" data-hasil="">=</button>
+  <br>
+  <label> Tanda operator matematika </label>
+  <br>
+  <button data-operasi="tambah" class="operasi medium-btn">+</button>
+  <button data-operasi="kurang" class="operasi medium-btn">-</button>
+  <button data-operasi="kali" class="operasi medium-btn">*</button>
+  <button data-operasi="bagi" class="operasi medium-btn">/</button>
+  
+
+</div>
+
+</body>
+
+<script>
+function munculPop() {
+  alert("Hi, I'm Chesya the maker. I'm still figuring out how to adding a Reset function to this simple Calculator. For now just add new math or Reload the page by clicking F5. Merci!");
+}
+
+
+(function() {
+  "";
+
+  
+  var el = function(element) {
+    if (element.charAt(0) === "#") { 
+      return document.querySelector(element); 
+    }
+
+    return document.querySelectorAll(element); 
+  };
+
+  
+  var inputan = el("#inputan"), samadengan = el("#samadengan"), angkas = el(".angka"), 
+    operasi = el(".operasi"), angka2 = "", angka1 = "", hasilangka, operator; 
+
+  var setangka = function() {
+    if (hasilangka) { angka2 = this.getAttribute("data-angka");
+      hasilangka = "";} 
+    else { angka2 += this.getAttribute("data-angka");}
+
+    inputan.innerHTML = angka2; 
+};
+
+  var pindahin = function() {
+    angka1 = angka2;
+    angka2 = "";
+    operator = this.getAttribute("data-operasi");
+
+    samadengan.setAttribute("data-hasil", ""); 
+  };
+
+  var tampilhasil = function() {
+    angka1 = parseFloat(angka1);
+    angka2 = parseFloat(angka2);
+
+    // Perform operation
+    switch (operator) {
+      case "tambah":
+        hasilangka = angka1 + angka2;
+        break;
+
+      case "kurang":
+        hasilangka = angka1 - angka2;
+        break;
+
+      case "kali":
+        hasilangka = angka1 * angka2;
+        break;
+
+      case "bagi":
+        hasilangka = angka1 / angka2;
+        break;
+
+      default:
+        hasilangka = angka2;
+    }
+
+
+    if (!isFinite(hasilangka)) {
+      if (isNaN(hasilangka)) { 
+        hasilangka = "Wah error tuh men";
+      } else { 
+        hasilangka = "jangan dibagi nol dong, mau gue nyanyi infinity by 1D nih?";
+        el('#calculator').classList.add("error"); 
+        el('#reset').classList.add("show"); 
+      }
+    }
+
+    inputan.innerHTML = hasilangka;
+    samadengan.setAttribute("data-hasil", hasilangka);
+
+
+    angka1 = 0;
+    angka2 = hasilangka;
+
+  };
+
+
+  var clearAll = function() {
+    angka1 = "";
+    angka2 = "";
+    inputan.innerHTML = "0";
+    samadengan.setAttribute("data-hasil", hasilangka);
+  };
+
+
+  for (var i = 0, l = angkas.length; i < l; i++) {
+    angkas[i].onclick = setangka;
+  }
+
+
+  for (var i = 0, l = operasi.length; i < l; i++) {
+    operasi[i].onclick = pindahin;
+  }
+
+  
+  samadengan.onclick = tampilhasil;
+
+  
+  el("#clear").onclick = clearAll;
+
+  
+  el("#reset").onclick = function() {
+    window.location = window.location;
+  };
+
+}());
+    </script>
+    </html>
